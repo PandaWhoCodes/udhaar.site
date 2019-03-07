@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{{url_for('static',filename='css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
+  <link href="{{url_for('static',filename='css/stack-interface.css')}}" rel="stylesheet" type="text/css" media="all" />
+  <link href="{{url_for('static',filename='css/theme.css')}}" rel="stylesheet" type="text/css" media="all" />
+  <link href="{{url_for('static',filename='css/custom.css')}}" rel="stylesheet" type="text/css" media="all" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700" rel="stylesheet">
+
+</head>
+
+<body data-smooth-scroll-offset="77">
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <br>
+      <h2 class="text-center" style="font-family: 'Open Sans', sans-serif; font-weight:600;">Udhaar Manager</h2>
+      <!-- <h3 id="title" class="text-center">Loading Tweet Data...</h2> -->
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div id="the_box" class="col-md-10">
+      <h5 id="title"></h5>
+      <!-- <input type="search" class="light-table-filter" data-table="order-table" placeholder="Filter" id="filter" onkeyup="filter_this()"> -->
+      <!-- <button onclick="exportTableToCSV()">Export To CSV</button> -->
+      <table class="border--round table--alternate-row" id="the_table">
+        <thead id="thead">
+          <tr>
+            <th>name</th>
+            <th>email</th>
+            <th>amount</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody" align="left">
+          {% for udhaar in udhaars %}
+          <tr>
+            <td>{{ udhaar.name }}</td>
+            <td>{{ udhaar.email }}</td>
+            <td>{{ udhaar.amount }}</td>
+            <td><b><a href="#" onclick="mail({{ udhaar.id }})">Remind</a>
+            <a href="#" onclick="delete_({{ udhaar.id }})">Remove</a></b>
+            </td>
+</tr>
+         {% endfor %} </tbody> </table> </div> <div class="col-md-1">
+    </div>
+
+  </div>
+  <div class="modal-container" data-modal-id="add_" id="add_">
+    <div class="modal-content section-modal">
+      <section class="unpad ">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <div class="boxed boxed--lg bg--white text-center feature">
+                <div class="modal-close modal-close-cross"></div>
+                <h3>Add Entry</h3>
+                <div class="feature__body">
+                  <form action="#">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <input id="name" type="text" placeholder="name" />
+                      </div>
+                      <div class="col-md-12">
+                        <input id="email" type="email" placeholder="email" />
+                      </div>
+                      <div class="col-md-12">
+                        <input id="amount" type="number" placeholder="amount" />
+                      </div>
+                      <div class="col-md-12">
+                        <button id="form_submit" type="submit" onclick="" class="btn btn--primary type--uppercase">Add Entry</button>
+                      </div>
+                    </div>
+                    <!--end of row-->
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="modal-container" data-modal-id="mail_sent" id="mail_sent">
+                <div class="modal-content">
+                    <div class="boxed boxed--lg">
+                        <h2>Your reminder is sent!</h2>
+                        <hr class="short">
+                    </div>
+                <div class="modal-close modal-close-cross"></div></div>
+            </div>
+</body>
+<script src="{{url_for('static',filename='js/jquery-3.1.1.min.js')}}">
+</script>
+<script src="{{url_for('static',filename='js/parallax.js')}}"></script>
+<script src="{{url_for('static',filename='js/smooth-scroll.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.4/r-2.2.2/datatables.min.css" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.4/r-2.2.2/datatables.min.js"></script>
+<style>
+.verticalLine {
+  border-left: thick solid #ff0000;
+}
+
+</style>
+<script>
+  initialize_table();
+  $(document).ready(function() {
+    $("#form_submit").click(function(e) {
+      console.log("submit");
+      e.preventDefault();
+      add_();
+    });
+  });
+
+  function initialize_table() {
+    var target = [];
+    // $.fn.dataTable.moment("ddd, DD MMM Y HH :mm:ss");
+    $('#the_table').DataTable({
+      dom: 'Bfrtip',
+      "pageLength": 10,
+      "bPaginate": false,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bInfo": false,
+      "lengthMenu": [
+        [100, 200, 500, -1],
+        [100, 200, 500, "All"]
+      ],
+      buttons: [{
+        text: 'Add entry',
+        action: function(e, dt, node, config) {
+          mr.modals.showModal($("#add_"));
+        }
+      }],
+      paging: true,
+      "aaSorting": [],
+    });
+  }
+
+  function delete_(id) {
+    var myKeyVals = {
+      "id": id
+    }
+    $.ajax({
+      type: 'POST',
+      url: "/del/udhaar",
+      data: myKeyVals,
+      // dataType: 'json',
+      success: function(response) {
+        location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('error occured');
+      }
+    });
+  }
+
+  function add_() {
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var amount = $("#amount").val();
+    var myKeyVals = {
+      "name": name,
+      "email": email,
+      "amount": amount
+    };
+    $.ajax({
+      type: 'POST',
+      url: "/add/udhaar",
+      data: myKeyVals,
+      // dataType: 'json',
+      success: function(response) {
+        location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('error occured');
+      }
+    });
+  }
+  function mail(id) {
+    var myKeyVals = {
+      "id": id
+    };
+    $.ajax({
+      type: 'POST',
+      url: "/send/mail",
+      data: myKeyVals,
+      // dataType: 'json',
+      success: function(response) {
+        mr.modals.showModal($("#mail_sent"));
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        alert('error occured');
+      }
+    });
+  }
+</script>
+
+</html>

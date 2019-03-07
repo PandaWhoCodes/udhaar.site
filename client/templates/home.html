@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Udhaar</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{url_for('static',filename='css/iconsmind.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{url_for('static',filename='css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{url_for('static',filename='css/stack-interface.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{url_for('static',filename='css/theme.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{url_for('static',filename='css/custom.css')}}" rel="stylesheet" type="text/css" media="all" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,400i,500,600,700" rel="stylesheet">
+
+    </head>
+    <body data-smooth-scroll-offset="77">
+        <div class="nav-container"> </div>
+        <div class="main-container">
+            <section class="cover cover-features imagebg space--lg" data-overlay="2">
+                <div class="background-image-holder"> <img alt="background" src="{{url_for('static',filename='img/main_banner2.jpg')}}"> </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-7">
+                            <h1><b>udhaar.site</b></h1>
+                            <p class="lead"> <b> Tired of keeping track of who you lent money to ? <br>Use <a href="http://www.udhaar.site">udhaar.site</a> to manage who you lend money to.</b></p>
+                            <a class="btn btn--primary type--uppercase" href="/manage"> <span class="btn__text">
+						Login</span> </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="feature feature-2 boxed boxed--border bg--white"> <i class="icon color--primary icon-Archery-2"></i>
+                                <div class="feature__body">
+                                    <p> Simple panel to keep track of everyone you lent money to.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-2 boxed boxed--border bg--white"> <i class="icon color--primary icon-Mail-Forward"></i>
+                                <div class="feature__body">
+                                    <p>Send email reminder to the borrower with just one click&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature feature-2 boxed boxed--border bg--white"> <i class="icon color--primary icon-Phone-SMS"></i>
+                                <div class="feature__body">
+                                    <p>Send sms reminders ( for <a href="mailto:ufoundashish@gmail.com">premium users</a> )</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script src="{{url_for('static',filename='js/jquery-3.1.1.min.js')}}"></script>
+        <script src="{{url_for('static',filename='js/parallax.js')}}"></script>
+        <script src="{{url_for('static',filename='js/smooth-scroll.min.js')}}"></script>
+        <script src="{{url_for('static',filename='js/scripts.js')}}"></script>
+
+    </body>
+
+</html>
